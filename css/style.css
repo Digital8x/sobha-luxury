@@ -7188,7 +7188,14 @@ button, input, select, textarea {
 /* ==========================================================================
    22. CONTENT & ASSET PROTECTION (CASUAL COPY & DOWNLOAD DEFENSE)
    ========================================================================== */
-body {
+/* Content Protection - Scoped to Media & Visual Assets */
+img,
+picture,
+video,
+.hero-bg-exact,
+.project-hero-bg,
+.gallery-slide-img,
+.satellite-map-canvas {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

@@ -747,8 +747,8 @@
   function initContentProtection() {
     // 1. Disable Context Menu (Right Click) on protected content & images
     document.addEventListener('contextmenu', function (e) {
-      // Allow context menu only inside input fields and textareas for pasting/editing
-      if (e.target.closest('input, textarea, select, [contenteditable="true"]')) {
+      // Allow context menu for input fields, textareas, and clickable links
+      if (e.target.closest('input, textarea, select, [contenteditable="true"], a[href]')) {
         return;
       }
       e.preventDefault();
