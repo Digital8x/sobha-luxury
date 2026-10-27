@@ -747,8 +747,17 @@
   function initContentProtection() {
     // 1. Disable Context Menu (Right Click) on protected content & images
     document.addEventListener('contextmenu', function (e) {
-      // Allow context menu for input fields, textareas, and clickable links
-      if (e.target.closest('input, textarea, select, [contenteditable="true"], a[href]')) {
+      // Inputs, textareas, selects, and editable content always keep native context menu
+      if (e.target.closest('input, textarea, select, [contenteditable="true"]')) {
+        return;
+      }
+      // If clicking protected media (even if wrapped inside an <a> tag), prevent context menu
+      if (e.target.closest('img, picture, video, .satellite-map-canvas, .hero-bg-exact, .gallery-slide-img')) {
+        e.preventDefault();
+        return;
+      }
+      // Allow context menu on standard text/navigation links
+      if (e.target.closest('a[href]')) {
         return;
       }
       e.preventDefault();

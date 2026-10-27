@@ -261,8 +261,38 @@ function dispatchLeadNotification($lead) {
           . "UTM Medium:       {$lead['utm_medium']}\n"
           . "Landing Page:     {$lead['landing_page']}\n";
 
+    // Resolve SMTP settings (.env takes priority, then crm_settings table)
+    $smtpHost   = !empty(ENV_SMTP_HOST) ? ENV_SMTP_HOST : getCrmSetting('smtp_host', '');
+    $smtpPort   = !empty(ENV_SMTP_PORT) ? ENV_SMTP_PORT : getCrmSetting('smtp_port', '465');
+    $smtpSecure = !empty(ENV_SMTP_SECURE) ? ENV_SMTP_SECURE : getCrmSetting('smtp_secure', 'ssl');
+    $smtpUser   = !empty(ENV_SMTP_USER) ? ENV_SMTP_USER : getCrmSetting('smtp_user', '');
+    $smtpPass   = !empty(ENV_SMTP_PASS) ? ENV_SMTP_PASS : getCrmSetting('smtp_pass', '');
+    $smtpFromName = !empty(ENV_SMTP_FROM_NAME) ? ENV_SMTP_FROM_NAME : getCrmSetting('smtp_from_name', 'Sobha Realty Luxury Desk');
+    $smtpFromEmail = !empty(ENV_SMTP_FROM_EMAIL) ? ENV_SMTP_FROM_EMAIL : (!empty($smtpUser) ? $smtpUser : 'noreply@sobha-luxury.com');
+
+    // If SMTP host is configured, transmit via authenticated SMTP
+    if (!empty($smtpHost)) {
+        require_once __DIR__ . '/smtp-mailer.php';
+        $mailer = new SobhaSmtpMailer([
+            'host'       => $smtpHost,
+            'port'       => $smtpPort,
+            'secure'     => $smtpSecure,
+            'user'       => $smtpUser,
+            'pass'       => $smtpPass,
+            'from_email' => $smtpFromEmail,
+            'from_name'  => $smtpFromName
+        ]);
+
+        $sent = $mailer->send($adminEmails, $subject, $body, $lead['email']);
+        if ($sent) {
+            return;
+        }
+        // If SMTP fails, smoothly fall through to native mail() fallback
+    }
+
+    // Native PHP mail() fallback
     $headers = [
-        'From: Sobha Realty Luxury <noreply@sobha-luxury.com>',
+        'From: Sobha Realty Luxury <' . $smtpFromEmail . '>',
         'Reply-To: ' . $lead['email'],
         'X-Mailer: PHP/' . phpversion(),
         'Content-Type: text/plain; charset=UTF-8'

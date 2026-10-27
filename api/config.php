@@ -99,6 +99,15 @@ define('DEFAULT_ADMIN_EMAILS', getSobhaEnv('ADMIN_EMAILS', 'info@sobha-luxury.co
 define('FALLBACK_ADMIN_USER', getSobhaEnv('FALLBACK_ADMIN_USER', ''));
 define('FALLBACK_ADMIN_PASS', getSobhaEnv('FALLBACK_ADMIN_PASS', ''));
 
+// SMTP Environment Defaults (Overrides or falls back to crm_settings table)
+define('ENV_SMTP_HOST', getSobhaEnv('SMTP_HOST', ''));
+define('ENV_SMTP_PORT', getSobhaEnv('SMTP_PORT', ''));
+define('ENV_SMTP_SECURE', getSobhaEnv('SMTP_SECURE', ''));
+define('ENV_SMTP_USER', getSobhaEnv('SMTP_USER', ''));
+define('ENV_SMTP_PASS', getSobhaEnv('SMTP_PASS', ''));
+define('ENV_SMTP_FROM_EMAIL', getSobhaEnv('SMTP_FROM_EMAIL', ''));
+define('ENV_SMTP_FROM_NAME', getSobhaEnv('SMTP_FROM_NAME', ''));
+
 // Session Security Configuration
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_httponly', '1');
