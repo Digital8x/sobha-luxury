@@ -739,4 +739,77 @@
     }
   }
 
+  /* ==========================================================================
+     CONTENT & ASSET PROTECTION
+     Discourages casual right-click saving, text copying, and source shortcuts
+     without breaking form inputs, links, or navigation.
+     ========================================================================== */
+  function initContentProtection() {
+    // 1. Disable Context Menu (Right Click) on protected content & images
+    document.addEventListener('contextmenu', function (e) {
+      // Allow context menu only inside input fields and textareas for pasting/editing
+      if (e.target.closest('input, textarea, select, [contenteditable="true"]')) {
+        return;
+      }
+      e.preventDefault();
+    });
+
+    // 2. Disable Drag-and-Drop saving of images
+    document.addEventListener('dragstart', function (e) {
+      if (e.target.tagName === 'IMG' || e.target.closest('img') || e.target.tagName === 'VIDEO') {
+        e.preventDefault();
+      }
+    });
+
+    // 3. Disable Copy & Cut actions on public content
+    document.addEventListener('copy', function (e) {
+      if (!e.target.closest('input, textarea, select, [contenteditable="true"]')) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('cut', function (e) {
+      if (!e.target.closest('input, textarea, select, [contenteditable="true"]')) {
+        e.preventDefault();
+      }
+    });
+
+    // 4. Discourage Casual Shortcut Keys (View Source Ctrl+U, Save Ctrl+S, Inspect Keys)
+    document.addEventListener('keydown', function (e) {
+      var isInput = !!e.target.closest('input, textarea, select, [contenteditable="true"]');
+      var key = e.key ? e.key.toLowerCase() : '';
+      var ctrlOrMeta = e.ctrlKey || e.metaKey;
+
+      // Prevent Ctrl+U / Cmd+U (View Page Source)
+      if (ctrlOrMeta && key === 'u') {
+        e.preventDefault();
+        return;
+      }
+
+      // Prevent Ctrl+S / Cmd+S (Save Webpage)
+      if (ctrlOrMeta && key === 's') {
+        e.preventDefault();
+        return;
+      }
+
+      // Prevent Ctrl+C on non-form text
+      if (ctrlOrMeta && key === 'c' && !isInput) {
+        var selection = window.getSelection ? window.getSelection().toString() : '';
+        if (selection.length > 0) {
+          e.preventDefault();
+          return;
+        }
+      }
+
+      // Discourage F12 and Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
+      if (e.key === 'F12' || (ctrlOrMeta && e.shiftKey && (key === 'i' || key === 'j' || key === 'c'))) {
+        e.preventDefault();
+        return;
+      }
+    });
+  }
+
+  initContentProtection();
+
 })();
+
