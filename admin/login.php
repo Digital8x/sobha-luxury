@@ -20,23 +20,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $db = getDbConnection();
         if ($db) {
-            $stmt = $db->prepare("SELECT id, username, password_hash, full_name FROM admin_users WHERE username = :u LIMIT 1");
-            $stmt->execute([':u' => $username]);
-            $user = $stmt->fetch();
+            try {
+                $stmt = $db->prepare("SELECT id, username, password_hash, role FROM admin_users WHERE username = :u LIMIT 1");
+                $stmt->execute([':u' => $username]);
+                $user = $stmt->fetch();
 
-            if ($user && password_verify($password, $user['password_hash'])) {
-                $_SESSION['sobha_admin_logged'] = true;
-                $_SESSION['sobha_admin_id'] = $user['id'];
-                $_SESSION['sobha_admin_user'] = $user['username'];
-                $_SESSION['sobha_admin_name'] = $user['full_name'];
+                if ($user && password_verify($password, $user['password_hash'])) {
+                    $_SESSION['sobha_admin_logged'] = true;
+                    $_SESSION['sobha_admin_id'] = $user['id'];
+                    $_SESSION['sobha_admin_user'] = $user['username'];
+                    $_SESSION['sobha_admin_name'] = $user['username'];
 
-                $update = $db->prepare("UPDATE admin_users SET last_login_at = NOW() WHERE id = :id");
-                $update->execute([':id' => $user['id']]);
+                    try {
+                        $update = $db->prepare("UPDATE admin_users SET last_login = NOW() WHERE id = :id");
+                        $update->execute([':id' => $user['id']]);
+                    } catch (Exception $e) {}
 
-                header('Location: leads.php');
-                exit;
-            } else {
-                $error = 'Invalid credentials. Access restricted.';
+                    header('Location: leads.php');
+                    exit;
+                } else {
+                    $error = 'Invalid credentials. Access restricted.';
+                }
+            } catch (Exception $e) {
+                error_log("[Admin Login Error] " . $e->getMessage());
+                $error = 'Database query error: ' . $e->getMessage();
             }
         } else {
             // Secure fallback authentication: Only active if explicitly defined in .env
