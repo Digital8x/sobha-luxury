@@ -38,27 +38,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     header('Location: leads.php');
                     exit;
-                } else {
-                    $error = 'Invalid credentials. Access restricted.';
                 }
+
+                // Check .env fallback credentials if DB user record check failed
+                $fallbackUser = FALLBACK_ADMIN_USER;
+                $fallbackPass = FALLBACK_ADMIN_PASS;
+                if (!empty($fallbackUser) && !empty($fallbackPass) &&
+                    hash_equals($fallbackUser, $username) && hash_equals($fallbackPass, $password)) {
+                    $_SESSION['sobha_admin_logged'] = true;
+                    $_SESSION['sobha_admin_id'] = 1;
+                    $_SESSION['sobha_admin_user'] = $username;
+                    $_SESSION['sobha_admin_name'] = 'Administrator';
+                    header('Location: leads.php');
+                    exit;
+                }
+
+                $error = 'Invalid credentials. Access restricted.';
             } catch (Exception $e) {
                 error_log("[Admin Login Error] " . $e->getMessage());
+                // If query fails, still allow .env fallback login
+                $fallbackUser = FALLBACK_ADMIN_USER;
+                $fallbackPass = FALLBACK_ADMIN_PASS;
+                if (!empty($fallbackUser) && !empty($fallbackPass) &&
+                    hash_equals($fallbackUser, $username) && hash_equals($fallbackPass, $password)) {
+                    $_SESSION['sobha_admin_logged'] = true;
+                    $_SESSION['sobha_admin_id'] = 1;
+                    $_SESSION['sobha_admin_user'] = $username;
+                    $_SESSION['sobha_admin_name'] = 'Administrator';
+                    header('Location: leads.php');
+                    exit;
+                }
                 $error = 'Database query error: ' . $e->getMessage();
             }
         } else {
-            // Secure fallback authentication: Only active if explicitly defined in .env
+            // Offline fallback authentication when DB is not reachable
             $fallbackUser = FALLBACK_ADMIN_USER;
             $fallbackPass = FALLBACK_ADMIN_PASS;
 
             if (!empty($fallbackUser) && !empty($fallbackPass) &&
                 hash_equals($fallbackUser, $username) && hash_equals($fallbackPass, $password)) {
                 $_SESSION['sobha_admin_logged'] = true;
+                $_SESSION['sobha_admin_id'] = 1;
                 $_SESSION['sobha_admin_user'] = $username;
                 $_SESSION['sobha_admin_name'] = 'Administrator (Environment Auth)';
                 header('Location: leads.php');
                 exit;
             } else {
-                $error = 'Database uninitialized or invalid credentials. Configure .env database credentials.';
+                $error = 'Database connection failed and invalid credentials.';
             }
         }
     }
