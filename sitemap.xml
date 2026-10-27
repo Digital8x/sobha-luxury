@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- 1. Home Page -->
+  <url>
+    <loc>https://sobha-luxury.com/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://sobha-luxury.com/images/hero_bg.jpg</image:loc>
+      <image:title>Sobha Realty Luxury Developments Dubai</image:title>
+      <image:caption>Signature luxury residences and waterfront villas across Dubai and UAE by Sobha Realty</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 2. Portfolio / All Developments -->
+  <url>
+    <loc>https://sobha-luxury.com/developments.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 3. Sobha Solis -->
+  <url>
+    <loc>https://sobha-luxury.com/sobha-solis.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sobha-luxury.com/images/solis_hero.png</image:loc>
+      <image:title>Sobha Solis Motor City Dubai</image:title>
+      <image:caption>1, 1.5, 2 and 3 bedroom luxury apartments in Motor City Dubai starting from AED 2.14M</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 4. Sobha Orbis -->
+  <url>
+    <loc>https://sobha-luxury.com/sobha-orbis.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sobha-luxury.com/images/orbis_hero.png</image:loc>
+      <image:title>Sobha Orbis Motor City Dubai</image:title>
+      <image:caption>Tower residences in Motor City with resort lagoon and bespoke leisure amenities</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 5. Sobha Sanctuary Villas -->
+  <url>
+    <loc>https://sobha-luxury.com/sobha-sanctuary.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sobha-luxury.com/images/sanctuary_hero.png</image:loc>
+      <image:title>Sobha Sanctuary Private Luxury Villas</image:title>
+      <image:caption>Exclusive 4, 5 and 6-bedroom signature estate villas with private crystal lagoon</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 6. Sobha Central -->
+  <url>
+    <loc>https://sobha-luxury.com/sobha-central.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sobha-luxury.com/images/central_hero.png</image:loc>
+      <image:title>Sobha Central Sheikh Zayed Road</image:title>
+      <image:caption>Ultra-prime residential towers on Sheikh Zayed Road Dubai from AED 1.63M</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 7. Sobha Siniya Island -->
+  <url>
+    <loc>https://sobha-luxury.com/sobha-siniya.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sobha-luxury.com/images/siniya_hero.png</image:loc>
+      <image:title>Sobha Siniya Island Ultra-Luxury Beachfront Villas</image:title>
+      <image:caption>Private island sanctuary with pristine natural mangroves, beaches and yacht berths</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 8. Property FAQ & Golden Visa Guide -->
+  <url>
+    <loc>https://sobha-luxury.com/faq.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 9. Privacy Policy -->
+  <url>
+    <loc>https://sobha-luxury.com/privacy.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- 10. Cookie Policy -->
+  <url>
+    <loc>https://sobha-luxury.com/cookie-policy.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

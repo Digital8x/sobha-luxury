@@ -1,0 +1,36 @@
+# ==============================================================================
+# ROBOTS.TXT — SOBHA REALTY LUXURY PORTFOLIO
+# Website: https://sobha-luxury.com
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /developments.html
+Allow: /sobha-solis.html
+Allow: /sobha-orbis.html
+Allow: /sobha-sanctuary.html
+Allow: /sobha-central.html
+Allow: /sobha-siniya.html
+Allow: /faq.html
+Allow: /privacy.html
+Allow: /cookie-policy.html
+
+# Disallow private administration, APIs, and conversion redirect pages
+Disallow: /admin/
+Disallow: /api/
+Disallow: /thank-you.html
+Disallow: /raw-source-assets/
+Disallow: /.env
+Disallow: /.git
+
+# Disallow search engine query scraping
+Disallow: /*?*
+
+# Allow query parameters for UTM tracking specifically if desired
+Allow: /*?utm_*
+
+# XML Sitemap Location for Google, Bing, Yandex, Yahoo
+Sitemap: https://sobha-luxury.com/sitemap.xml

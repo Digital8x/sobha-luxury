@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enquiry Received | Sobha Realty Luxury</title>
+  <meta name="description" content="Your enquiry has been received by our private client property advisory team." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .thankyou-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 140px 20px 80px;
+      background: radial-gradient(circle at 50% 25%, #181512 0%, #0b0b0b 60%, #060606 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .thankyou-card {
+      max-width: 680px;
+      width: 100%;
+      background: linear-gradient(180deg, #161514 0%, #0d0d0d 100%);
+      border: 1px solid rgba(214, 161, 93, 0.3);
+      border-radius: 6px;
+      padding: 56px 40px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(214, 161, 93, 0.08);
+      position: relative;
+      z-index: 2;
+    }
+    .thankyou-badge {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 28px;
+      border-radius: 50%;
+      background: #1c1a17;
+      border: 1.5px solid #D6A15D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(214, 161, 93, 0.25);
+    }
+    .thankyou-badge svg {
+      width: 32px;
+      height: 32px;
+      color: #D6A15D;
+    }
+    .thankyou-eyebrow {
+      font-family: var(--font-body, 'Outfit', sans-serif);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #D6A15D;
+      margin-bottom: 12px;
+    }
+    .thankyou-title {
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: clamp(1.85rem, 3.2vw, 2.4rem);
+      font-weight: 500;
+      color: #F5F1EB;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      letter-spacing: 0.04em;
+    }
+    .thankyou-gold {
+      color: #D6A15D;
+      background: linear-gradient(135deg, #F3D9A8 0%, #D6A15D 60%, #B88340 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .thankyou-desc {
+      font-family: var(--font-body, 'Outfit', sans-serif);
+      font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+      color: #C2BFBA;
+      line-height: 1.75;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+    .thankyou-meta {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(214, 161, 93, 0.15);
+      border-radius: 4px;
+      padding: 18px 24px;
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .thankyou-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+    }
+    .thankyou-meta-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8E8E8E;
+    }
+    .thankyou-meta-val {
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: 13px;
+      color: #F5F1EB;
+      letter-spacing: 0.05em;
+    }
+    .thankyou-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .thankyou-btn-primary {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #E6B97A 0%, #D6A15D 50%, #B6813C 100%);
+      color: #0B0B0B;
+      font-family: var(--font-body, 'Outfit', sans-serif);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(214, 161, 93, 0.3);
+    }
+    .thankyou-btn-primary:hover {
+      background: linear-gradient(135deg, #F0C78E 0%, #DEAB6A 50%, #C48E47 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(214, 161, 93, 0.4);
+      color: #000;
+    }
+    .thankyou-btn-ghost {
+      padding: 14px 28px;
+      background: transparent;
+      border: 1px solid rgba(214, 161, 93, 0.4);
+      color: #F5F1EB;
+      font-family: var(--font-body, 'Outfit', sans-serif);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    .thankyou-btn-ghost:hover {
+      border-color: #D6A15D;
+      background: rgba(214, 161, 93, 0.08);
+      color: #D6A15D;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="page-wrapper">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-brand">
+      <div class="nav-logo-pill">
+        <img src="images/logo.png" alt="Sobha Luxury" class="nav-logo" />
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html"><span>HOME</span></a></li>
+      <li>
+        <a href="developments.html">
+          <span>DEVELOPMENTS</span>
+        </a>
+      </li>
+      <li><a href="index.html#brand-intro"><span>ABOUT SOBHA</span></a></li>
+      <li><a href="index.html#contact"><span>CONTACT</span></a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#enquiry" class="nav-pill-cta" data-enquiry-modal data-development="All Developments">
+        <span>ENQUIRE NOW</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      </a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open Navigation Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="nav-overlay" id="navOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-header">
+      <img src="images/logo.png" alt="Sobha Realty Luxury" class="mobile-nav-logo" />
+      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="developments.html">All Developments</a></li>
+      <li><a href="sobha-solis.html">Sobha Solis</a></li>
+      <li><a href="sobha-orbis.html">Sobha Orbis</a></li>
+      <li><a href="sobha-sanctuary.html">Sobha Sanctuary Villas</a></li>
+      <li><a href="sobha-central.html">Sobha Central</a></li>
+      <li><a href="sobha-siniya.html">Sobha Siniya Island Villas</a></li>
+      <li><a href="policy.html">Policy &amp; Terms</a></li>
+    </ul>
+  </nav>
+
+  <!-- ==================== MAIN THANK YOU CONTENT ==================== -->
+  <main class="thankyou-wrapper">
+    <div class="thankyou-card">
+      <div class="thankyou-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+
+      <p class="thankyou-eyebrow">ENQUIRY TRANSMITTED</p>
+      <h1 class="thankyou-title">Thank You for Your <span class="thankyou-gold">Enquiry!</span></h1>
+      <p class="thankyou-desc">
+        We appreciate your interest in our properties. Our team has received your enquiry and will contact you soon with more information.
+      </p>
+
+      <div class="thankyou-meta">
+        <div class="thankyou-meta-item">
+          <span class="thankyou-meta-label">Response Protocol</span>
+          <span class="thankyou-meta-val">Dedicated Advisor</span>
+        </div>
+        <div class="thankyou-meta-item">
+          <span class="thankyou-meta-label">Turnaround</span>
+          <span class="thankyou-meta-val">Within 2 Business Hours</span>
+        </div>
+        <div class="thankyou-meta-item">
+          <span class="thankyou-meta-label">Direct Desk</span>
+          <span class="thankyou-meta-val">+971 58 271 5309</span>
+        </div>
+      </div>
+
+      <div class="thankyou-actions">
+        <a href="developments.html" class="thankyou-btn-primary">
+          <span>EXPLORE OUR PROJECTS</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <a href="index.html" class="thankyou-btn-ghost">
+          <span>RETURN HOME</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+
+        <!-- Column 1: Brand & Identity -->
+        <div class="footer-column footer-brand-col">
+          <a href="index.html" class="footer-logo-link">
+            <img src="images/logo.png" alt="Sobha Realty Luxury" class="footer-logo" />
+          </a>
+          <p class="footer-brand-desc">Exceptional Living. Thoughtfully Designed.</p>
+          <div class="footer-gold-bar"></div>
+          <p class="footer-tagline">EXPLORE &nbsp;·&nbsp; DISCOVER &nbsp;·&nbsp; ENQUIRE</p>
+        </div>
+
+        <!-- Column 2: Developments -->
+        <div class="footer-column footer-nav-col">
+          <h5 class="footer-heading">DEVELOPMENTS</h5>
+          <div class="footer-gold-bar"></div>
+          <ul class="footer-links-list">
+            <li><a href="sobha-solis.html">Sobha Solis</a></li>
+            <li><a href="sobha-orbis.html">Sobha Orbis</a></li>
+            <li><a href="sobha-sanctuary.html">Sobha Sanctuary Villas</a></li>
+            <li><a href="sobha-central.html">Sobha Central</a></li>
+            <li><a href="sobha-siniya.html">Sobha Siniya Island Villas</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Explore -->
+        <div class="footer-column footer-nav-col">
+          <h5 class="footer-heading">EXPLORE</h5>
+          <div class="footer-gold-bar"></div>
+          <ul class="footer-links-list">
+            <li><a href="developments.html">All Developments</a></li>
+            <li><a href="faq.html">Property FAQs</a></li>
+            <li><a href="policy.html">Privacy Policy &amp; Terms</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Get in Touch -->
+        <div class="footer-column footer-contact-col">
+          <h5 class="footer-heading">GET IN TOUCH</h5>
+          <div class="footer-gold-bar"></div>
+          <a href="https://wa.me/971582715309" target="_blank" rel="noopener noreferrer" class="footer-wa-card"
+            title="Chat on WhatsApp: +971 58 271 5309">
+            <span class="footer-wa-icon-wrap">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="#25D366">
+                <path
+                  d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.275-.1-.475-.15-.675.15-.2.299-.774.979-.95 1.178-.175.199-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.077-.96-1.805-2.146-2.016-2.508-.211-.362-.022-.557.127-.706.135-.134.3-.349.45-.524.15-.175.2-.299.3-.499.1-.2.05-.374-.025-.524-.075-.15-.675-1.625-.925-2.224-.243-.584-.49-.505-.674-.514-.175-.008-.374-.01-.574-.01s-.524.075-.798.374c-.274.299-1.048 1.024-1.048 2.5s1.073 2.898 1.223 3.098c.15.2 2.112 3.225 5.117 4.524.714.309 1.272.494 1.706.632.718.228 1.372.196 1.889.119.577-.087 1.78-.727 2.03-1.428.25-.701.25-1.302.175-1.428-.075-.126-.275-.201-.575-.351z" />
+                <path
+                  d="M12.004 0C5.373 0 .004 5.373.004 12c0 2.115.553 4.103 1.523 5.836L0 24l6.335-1.662C8.016 23.284 9.948 24 12.004 24c6.627 0 12-5.373 12-12s-5.373-12-12-12zm0 22c-1.848 0-3.585-.515-5.073-1.408l-.364-.216-3.766.988 1.005-3.67-.236-.376C2.628 15.82 2.004 13.974 2.004 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z" />
+              </svg>
+            </span>
+            <span class="footer-wa-info">
+              <span class="footer-wa-title">Direct Client Advisory</span>
+              <span class="footer-wa-num">+971 58 271 5309</span>
+            </span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-flex">
+          <p class="footer-copy">&copy; 2026 Sobha Realty Luxury. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <span class="footer-sep">&bull;</span>
+            <a href="policy.html">Data &amp; Enquiry Policy</a>
+            <span class="footer-sep">&bull;</span>
+            <a href="cookie-policy.html">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/enquiry-modal.js"></script>
+</body>
+</html>
