@@ -51,8 +51,11 @@ function loadSobhaEnv($envPath = null) {
             $value = trim($value);
 
             // Strip surrounding quotes if present
-            if ((str_starts_with($value, '"') && str_ends_with($value, '"')) ||
-                (str_starts_with($value, "'") && str_ends_with($value, "'"))) {
+            $len = strlen($value);
+            if ($len >= 2 && (
+                ($value[0] === '"' && $value[$len - 1] === '"') ||
+                ($value[0] === "'" && $value[$len - 1] === "'")
+            )) {
                 $value = substr($value, 1, -1);
             }
 

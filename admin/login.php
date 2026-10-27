@@ -2,7 +2,6 @@
 /**
  * SOBHA REALTY LUXURY - ADMIN LOGIN
  */
-session_start();
 require_once __DIR__ . '/../api/config.php';
 
 // Redirect if already logged in
