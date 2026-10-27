@@ -270,8 +270,8 @@ function dispatchLeadNotification($lead) {
     $smtpFromName = !empty(ENV_SMTP_FROM_NAME) ? ENV_SMTP_FROM_NAME : getCrmSetting('smtp_from_name', 'Sobha Realty Luxury Desk');
     $smtpFromEmail = !empty(ENV_SMTP_FROM_EMAIL) ? ENV_SMTP_FROM_EMAIL : (!empty($smtpUser) ? $smtpUser : 'noreply@sobha-luxury.com');
 
-    // If SMTP host is configured, transmit via authenticated SMTP
-    if (!empty($smtpHost)) {
+    // If authenticated SMTP is fully configured (host + user + pass), transmit via SMTP
+    if (!empty($smtpHost) && !empty($smtpUser) && !empty($smtpPass)) {
         require_once __DIR__ . '/smtp-mailer.php';
         $mailer = new SobhaSmtpMailer([
             'host'       => $smtpHost,
@@ -285,14 +285,16 @@ function dispatchLeadNotification($lead) {
 
         $sent = $mailer->send($adminEmails, $subject, $body, $lead['email']);
         if ($sent) {
+            error_log("[Sobha Lead Mail] Sent successfully via SMTP to: " . $adminEmails);
             return;
         }
-        // If SMTP fails, smoothly fall through to native mail() fallback
+        error_log("[Sobha Lead Mail] SMTP failed. Falling back to native mail()...");
     }
 
     // Native PHP mail() fallback
+    $fromHeader = !empty($smtpFromEmail) ? $smtpFromEmail : 'noreply@sobha-luxury.com';
     $headers = [
-        'From: Sobha Realty Luxury <' . $smtpFromEmail . '>',
+        'From: Sobha Realty Luxury <' . $fromHeader . '>',
         'Reply-To: ' . $lead['email'],
         'X-Mailer: PHP/' . phpversion(),
         'Content-Type: text/plain; charset=UTF-8'
@@ -302,7 +304,11 @@ function dispatchLeadNotification($lead) {
     foreach ($recipients as $recipient) {
         $recipient = trim($recipient);
         if (filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
-            @mail($recipient, $subject, $body, implode("\r\n", $headers));
+            $mailResult = @mail($recipient, $subject, $body, implode("\r\n", $headers), "-f" . $fromHeader);
+            if (!$mailResult) {
+                // Secondary attempt without -f parameter (some shared cPanel hosts disallow extra flag)
+                @mail($recipient, $subject, $body, implode("\r\n", $headers));
+            }
         }
     }
 }
