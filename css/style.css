@@ -2522,13 +2522,12 @@ button, input, select, textarea {
 
 .dev-spec-value {
   font-family: var(--font-body);
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 500;
   color: #FFFFFF;
   line-height: 1.35;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .dev-spec-value.gold-price,
