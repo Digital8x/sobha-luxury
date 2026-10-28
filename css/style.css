@@ -1672,6 +1672,7 @@ button, input, select, textarea {
   min-height: 58px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -6132,6 +6133,7 @@ button, input, select, textarea {
   color: #D6A15D;
   background: linear-gradient(135deg, #F3D9A8 0%, #D6A15D 60%, #B88340 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -7231,7 +7233,6 @@ video,
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
-  user-drag: none;
   -webkit-touch-callout: none;
   pointer-events: auto;
 }

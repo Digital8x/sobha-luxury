@@ -122,7 +122,7 @@ class SobhaSmtpMailer {
             $this->sendCommand($socket, "MAIL FROM:<$fromAddr>", 250);
 
             foreach ($cleanRecipients as $rcpt) {
-                $this->sendCommand($socket, "RCPT TO:<$rcpt>", 250);
+                $this->sendCommand($socket, "RCPT TO:<$rcpt>", [250, 251]);
             }
 
             $this->sendCommand($socket, "DATA", 354);
@@ -173,19 +173,32 @@ class SobhaSmtpMailer {
         return $this->readResponse($socket, $expectedCode);
     }
 
-    private function readResponse($socket, $expectedCode) {
+    private function readResponse($socket, $expectedCodes) {
+        if (!is_array($expectedCodes)) {
+            $expectedCodes = [$expectedCodes];
+        }
         $response = '';
+        $completed = false;
         while ($line = fgets($socket, 515)) {
             $response .= $line;
-            // Multiline responses have '-' after the 3-digit code; last line has a space
-            if (isset($line[3]) && $line[3] === ' ') {
-                break;
+            // Verify line has standard CRLF ending
+            if (substr($line, -2) === "\r\n") {
+                // Final line of SMTP reply: 3 digits followed by a space, or 3 digits followed directly by CRLF
+                if ((isset($line[3]) && $line[3] === ' ') || preg_match('/^[0-9]{3}\r\n$/', $line)) {
+                    $completed = true;
+                    break;
+                }
             }
         }
 
+        if (!$completed) {
+            throw new Exception("Connection terminated or timed out before complete SMTP response received: " . trim($response));
+        }
+
         $code = (int)substr($response, 0, 3);
-        if ($code !== $expectedCode) {
-            throw new Exception("SMTP Error: expected $expectedCode but got $code: " . trim($response));
+        if (!in_array($code, $expectedCodes, true)) {
+            $expectedStr = implode('/', $expectedCodes);
+            throw new Exception("SMTP Error: expected $expectedStr but got $code: " . trim($response));
         }
         return $response;
     }

@@ -9,20 +9,17 @@
 Options -Indexes
 
 # Deny direct browser access to environment files, sql dumps, git, logs
-<FilesMatch "^(\.env|\.git|\.gitignore|.*\.sql|.*\.log|composer\.(json|lock))$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(\.env|\.git|\.gitignore|.*\.sql|.*\.log|composer\.(json|lock)) - [F,L,NC]
+</IfModule>
 
-# Specifically deny .env access with 403 Forbidden
-<Files ".env">
-    Order allow,deny
-    Deny from all
-</Files>
-<Files ".env.*">
-    Order allow,deny
-    Deny from all
-</Files>
+<IfModule !mod_rewrite.c>
+    <FilesMatch "(^\.env|^\.git|^\.gitignore|\.sql$|\.log$|^composer\.(json|lock)$)">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
 
 # ------------------------------------------------------------------------------
 # 2. SECURITY HEADERS
