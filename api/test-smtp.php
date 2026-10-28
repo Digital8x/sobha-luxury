@@ -183,18 +183,33 @@ header('Content-Type: text/html; charset=UTF-8');
                     readSmtpResponse($socket, 250, $addLog);
 
                     $recipients = explode(',', $to);
-                    $firstRcpt = trim($recipients[0]);
-                    sendSmtpCommand($socket, "RCPT TO:<$firstRcpt>", $addLog);
-                    readSmtpResponse($socket, [250, 251], $addLog);
+                    $cleanRecipients = [];
+                    foreach ($recipients as $r) {
+                        $r = trim($r);
+                        if (filter_var($r, FILTER_VALIDATE_EMAIL)) {
+                            $cleanRecipients[] = $r;
+                        }
+                    }
+
+                    if (empty($cleanRecipients)) {
+                        throw new Exception("No valid recipient email address found in ADMIN_EMAILS.");
+                    }
+
+                    foreach ($cleanRecipients as $rcpt) {
+                        sendSmtpCommand($socket, "RCPT TO:<$rcpt>", $addLog);
+                        readSmtpResponse($socket, [250, 251], $addLog);
+                    }
 
                     sendSmtpCommand($socket, "DATA", $addLog);
                     readSmtpResponse($socket, 354, $addLog);
 
+                    $allRcptStr = implode(', ', $cleanRecipients);
                     $testMsg = "From: Sobha Realty Test <$fromEmail>\r\n"
-                             . "To: <$firstRcpt>\r\n"
+                             . "To: <" . implode('>, <', $cleanRecipients) . ">\r\n"
                              . "Subject: =?UTF-8?B?" . base64_encode("Sobha Luxury SMTP Test Delivery") . "?=\r\n"
                              . "Content-Type: text/plain; charset=UTF-8\r\n\r\n"
                              . "This is a live test message confirming your Sobha Luxury SMTP configuration is working correctly!\r\n"
+                             . "Delivered to: $allRcptStr\r\n"
                              . "Sent timestamp: " . date('Y-m-d H:i:s') . "\r\n.\r\n";
 
                     fwrite($socket, $testMsg);
@@ -203,7 +218,7 @@ header('Content-Type: text/html; charset=UTF-8');
                     sendSmtpCommand($socket, "QUIT", $addLog);
                     @fclose($socket);
 
-                    $addLog("\n🎉 SUCCESS: Test message successfully accepted by SMTP server for delivery to {$firstRcpt}!");
+                    $addLog("\n🎉 SUCCESS: Test message successfully accepted by SMTP server for delivery to {$allRcptStr}!");
                 } catch (Exception $ex) {
                     $addLog("\n❌ ERROR: " . $ex->getMessage());
                     @fclose($socket);
