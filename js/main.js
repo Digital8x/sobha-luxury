@@ -182,6 +182,23 @@
 
     // Country Code Dropdown Toggle
     if (ccPicker && ccDropdown) {
+      // Auto-detect visitor's country on load
+      fetch('api/geo-detect.php')
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data && data.success && data.dial_code) {
+            const matchingLi = ccDropdown.querySelector(`li[data-code="${data.dial_code}"]`);
+            if (matchingLi) {
+              if (countryCodeInput) countryCodeInput.value = data.dial_code;
+              if (ccCode) ccCode.textContent = data.dial_code;
+              if (ccFlag) ccFlag.textContent = matchingLi.getAttribute('data-flag') || data.flag;
+              ccDropdown.querySelectorAll('li').forEach(function (li) { li.classList.remove('active'); });
+              matchingLi.classList.add('active');
+            }
+          }
+        })
+        .catch(function () {});
+
       ccPicker.addEventListener('click', function (e) {
         e.stopPropagation();
         const isOpen = ccDropdown.classList.contains('open');

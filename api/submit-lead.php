@@ -238,7 +238,10 @@ function recordBlockedLead($ip, $reason, $data, $ua) {
 }
 
 function dispatchLeadNotification($lead) {
-    $adminEmails = getCrmSetting('admin_emails', DEFAULT_ADMIN_EMAILS);
+    // .env takes priority, then crm_settings table
+    $adminEmails = !empty(DEFAULT_ADMIN_EMAILS) && DEFAULT_ADMIN_EMAILS !== 'info@sobha-luxury.com'
+        ? DEFAULT_ADMIN_EMAILS
+        : getCrmSetting('admin_emails', DEFAULT_ADMIN_EMAILS);
     $subject = "🏠 New Lead — Sobha Luxury | {$lead['full_name']} | {$lead['development']} | {$lead['country_flag']} {$lead['city']}, {$lead['country']}";
 
     $body = "New Luxury Property Enquiry Transmitted:\n\n"

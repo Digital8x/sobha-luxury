@@ -4885,6 +4885,22 @@ button, input, select, textarea {
   font-size: 13.5px;
 }
 
+/* Fix browser autofill pale blue/white background overlay */
+.enquiry-input-box input:-webkit-autofill,
+.enquiry-input-box input:-webkit-autofill:hover,
+.enquiry-input-box input:-webkit-autofill:focus,
+.enquiry-input-box input:-webkit-autofill:active,
+.consult-input-box input:-webkit-autofill,
+.consult-input-box input:-webkit-autofill:hover,
+.consult-input-box input:-webkit-autofill:focus,
+.consult-input-box input:-webkit-autofill:active {
+  -webkit-text-fill-color: #FFFFFF !important;
+  caret-color: #FFFFFF !important;
+  transition: background-color 50000s ease-in-out 0s !important;
+  box-shadow: 0 0 0 1000px #111114 inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #111114 inset !important;
+}
+
 .enquiry-input-box input::placeholder {
   color: #5E5B55;
 }
@@ -4905,8 +4921,22 @@ button, input, select, textarea {
 }
 
 .country-code-picker .country-flag {
-  font-size: 16px;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 15px;
+}
+
+.country-flag-img {
+  width: 20px;
+  height: 14px;
+  min-width: 20px;
+  border-radius: 2px;
+  object-fit: cover;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
+  display: block;
 }
 
 .country-code-picker .country-dial-code {
@@ -4938,26 +4968,52 @@ button, input, select, textarea {
   position: absolute;
   top: calc(100% + 14px);
   left: -14px;
-  width: 280px;
-  max-height: 230px;
+  width: 290px;
   background: #111115;
   border: 1px solid rgba(197, 168, 128, 0.4);
   border-radius: 8px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
-  overflow-y: auto;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95);
   z-index: 100;
   display: none;
-  padding: 6px 0;
+  padding: 8px 0 6px 0;
 }
 
 .country-code-picker.open .country-dropdown-menu {
   display: block;
 }
 
-.country-dropdown-menu::-webkit-scrollbar {
+.country-dropdown-search-wrap {
+  padding: 0 10px 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.country-dropdown-search {
+  width: 100%;
+  background: #1a1a20;
+  border: 1px solid rgba(197, 168, 128, 0.3);
+  border-radius: 6px;
+  color: #FFFFFF;
+  padding: 7px 10px;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.country-dropdown-search:focus {
+  border-color: #C5A880;
+}
+
+.country-dropdown-list {
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 4px 0 0 0;
+}
+
+.country-dropdown-list::-webkit-scrollbar {
   width: 5px;
 }
-.country-dropdown-menu::-webkit-scrollbar-thumb {
+.country-dropdown-list::-webkit-scrollbar-thumb {
   background: rgba(197, 168, 128, 0.4);
   border-radius: 3px;
 }

@@ -6,26 +6,77 @@
 (function () {
   'use strict';
 
-  // Supported country codes with flags
+  // Comprehensive list of countries with dial codes, ISO2 and names
   const COUNTRY_CODES = [
-    { name: 'United Arab Emirates', code: '+971', flag: '🇦🇪' },
-    { name: 'Saudi Arabia', code: '+966', flag: '🇸🇦' },
-    { name: 'Qatar', code: '+974', flag: '🇶🇦' },
-    { name: 'Kuwait', code: '+965', flag: '🇰🇼' },
-    { name: 'Bahrain', code: '+973', flag: '🇧🇭' },
-    { name: 'Oman', code: '+968', flag: '🇴🇲' },
-    { name: 'United Kingdom', code: '+44', flag: '🇬🇧' },
-    { name: 'United States', code: '+1', flag: '🇺🇸' },
-    { name: 'Canada', code: '+1', flag: '🇨🇦' },
-    { name: 'India', code: '+91', flag: '🇮🇳' },
-    { name: 'Russia', code: '+7', flag: '🇷🇺' },
-    { name: 'Switzerland', code: '+41', flag: '🇨🇭' },
-    { name: 'Germany', code: '+49', flag: '🇩🇪' },
-    { name: 'France', code: '+33', flag: '🇫🇷' },
-    { name: 'Singapore', code: '+65', flag: '🇸🇬' },
-    { name: 'China', code: '+86', flag: '🇨🇳' },
-    { name: 'Australia', code: '+61', flag: '🇦🇺' }
+    { name: 'India', code: '+91', iso: 'in' },
+    { name: 'United Arab Emirates', code: '+971', iso: 'ae' },
+    { name: 'United States', code: '+1', iso: 'us' },
+    { name: 'United Kingdom', code: '+44', iso: 'gb' },
+    { name: 'Saudi Arabia', code: '+966', iso: 'sa' },
+    { name: 'Qatar', code: '+974', iso: 'qa' },
+    { name: 'Kuwait', code: '+965', iso: 'kw' },
+    { name: 'Oman', code: '+968', iso: 'om' },
+    { name: 'Bahrain', code: '+973', iso: 'bh' },
+    { name: 'Canada', code: '+1', iso: 'ca' },
+    { name: 'Australia', code: '+61', iso: 'au' },
+    { name: 'Singapore', code: '+65', iso: 'sg' },
+    { name: 'Germany', code: '+49', iso: 'de' },
+    { name: 'France', code: '+33', iso: 'fr' },
+    { name: 'Italy', code: '+39', iso: 'it' },
+    { name: 'Spain', code: '+34', iso: 'es' },
+    { name: 'Switzerland', code: '+41', iso: 'ch' },
+    { name: 'Netherlands', code: '+31', iso: 'nl' },
+    { name: 'Belgium', code: '+32', iso: 'be' },
+    { name: 'Austria', code: '+43', iso: 'at' },
+    { name: 'Sweden', code: '+46', iso: 'se' },
+    { name: 'Norway', code: '+47', iso: 'no' },
+    { name: 'Denmark', code: '+45', iso: 'dk' },
+    { name: 'Ireland', code: '+353', iso: 'ie' },
+    { name: 'Russia', code: '+7', iso: 'ru' },
+    { name: 'China', code: '+86', iso: 'cn' },
+    { name: 'Hong Kong', code: '+852', iso: 'hk' },
+    { name: 'Japan', code: '+81', iso: 'jp' },
+    { name: 'South Korea', code: '+82', iso: 'kr' },
+    { name: 'Malaysia', code: '+60', iso: 'my' },
+    { name: 'Thailand', code: '+66', iso: 'th' },
+    { name: 'Indonesia', code: '+62', iso: 'id' },
+    { name: 'Philippines', code: '+63', iso: 'ph' },
+    { name: 'Vietnam', code: '+84', iso: 'vn' },
+    { name: 'Pakistan', code: '+92', iso: 'pk' },
+    { name: 'Bangladesh', code: '+880', iso: 'bd' },
+    { name: 'Sri Lanka', code: '+94', iso: 'lk' },
+    { name: 'Nepal', code: '+977', iso: 'np' },
+    { name: 'Turkey', code: '+90', iso: 'tr' },
+    { name: 'Egypt', code: '+20', iso: 'eg' },
+    { name: 'Jordan', code: '+962', iso: 'jo' },
+    { name: 'Lebanon', code: '+961', iso: 'lb' },
+    { name: 'South Africa', code: '+27', iso: 'za' },
+    { name: 'Nigeria', code: '+234', iso: 'ng' },
+    { name: 'Kenya', code: '+254', iso: 'ke' },
+    { name: 'Ghana', code: '+233', iso: 'gh' },
+    { name: 'Brazil', code: '+55', iso: 'br' },
+    { name: 'Mexico', code: '+52', iso: 'mx' },
+    { name: 'Argentina', code: '+54', iso: 'ar' },
+    { name: 'New Zealand', code: '+64', iso: 'nz' },
+    { name: 'Poland', code: '+48', iso: 'pl' },
+    { name: 'Portugal', code: '+351', iso: 'pt' },
+    { name: 'Greece', code: '+30', iso: 'gr' },
+    { name: 'Czech Republic', code: '+420', iso: 'cz' },
+    { name: 'Hungary', code: '+36', iso: 'hu' },
+    { name: 'Romania', code: '+40', iso: 'ro' },
+    { name: 'Kazakhstan', code: '+7', iso: 'kz' },
+    { name: 'Uzbekistan', code: '+998', iso: 'uz' },
+    { name: 'Azerbaijan', code: '+994', iso: 'az' },
+    { name: 'Cyprus', code: '+357', iso: 'cy' },
+    { name: 'Malta', code: '+356', iso: 'mt' },
+    { name: 'Luxembourg', code: '+352', iso: 'lu' },
+    { name: 'Monaco', code: '+377', iso: 'mc' }
   ];
+
+  function getFlagHtml(isoCode, altText) {
+    const iso = (isoCode || 'ae').toLowerCase();
+    return `<img src="https://flagcdn.com/w40/${iso}.png" srcset="https://flagcdn.com/w80/${iso}.png 2x" width="20" height="14" alt="${altText || iso.toUpperCase()}" class="country-flag-img" loading="lazy">`;
+  }
 
   // Development mapping helper
   const DEVELOPMENTS = [
@@ -144,7 +195,7 @@
                     </span>
                     
                     <div class="country-code-picker" id="countryCodePicker" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox">
-                      <span class="country-flag" id="selectedFlag">🇦🇪</span>
+                      <span class="country-flag" id="selectedFlag"><img src="https://flagcdn.com/w40/ae.png" srcset="https://flagcdn.com/w80/ae.png 2x" width="20" height="14" alt="AE" class="country-flag-img"></span>
                       <span class="country-dial-code" id="selectedDialCode">+971</span>
                       <svg class="chevron-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       
@@ -251,7 +302,59 @@
     return document.getElementById('luxuryEnquiryModal');
   }
 
-  // Populate Country Dropdown
+  // Auto-detect visitor country via internal geo-detect API with client-side fallback
+  let detectedCountry = null;
+  function detectVisitorCountry(callback) {
+    if (detectedCountry) {
+      if (callback) callback(detectedCountry);
+      return;
+    }
+
+    function tryExternalFallback() {
+      // Free public client fallback in case local server doesn't execute PHP (e.g. static server / Live Server port 5500)
+      fetch('https://ipapi.co/json/')
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data && data.country_calling_code) {
+            detectedCountry = {
+              code: data.country_calling_code.startsWith('+') ? data.country_calling_code : '+' + data.country_calling_code,
+              iso: (data.country_code || 'AE').toLowerCase(),
+              name: data.country_name || 'United Arab Emirates'
+            };
+            if (callback) callback(detectedCountry);
+          } else {
+            fallbackDefault();
+          }
+        })
+        .catch(fallbackDefault);
+    }
+
+    function fallbackDefault() {
+      detectedCountry = { code: '+971', iso: 'ae', name: 'United Arab Emirates' };
+      if (callback) callback(detectedCountry);
+    }
+
+    fetch('api/geo-detect.php')
+      .then(function (res) {
+        if (!res.ok) throw new Error('Not found');
+        return res.json();
+      })
+      .then(function (data) {
+        if (data && data.success && data.dial_code) {
+          detectedCountry = {
+            code: data.dial_code,
+            iso: (data.country_code || 'AE').toLowerCase(),
+            name: data.country || 'United Arab Emirates'
+          };
+          if (callback) callback(detectedCountry);
+        } else {
+          tryExternalFallback();
+        }
+      })
+      .catch(tryExternalFallback);
+  }
+
+  // Populate Country Dropdown with Search & Auto-Detection
   function initCountryDropdown() {
     const menu = document.getElementById('countryDropdownMenu');
     const picker = document.getElementById('countryCodePicker');
@@ -261,37 +364,88 @@
 
     if (!menu || !picker) return;
 
-    menu.innerHTML = '';
-    COUNTRY_CODES.forEach(function (c) {
-      const opt = document.createElement('div');
-      opt.className = 'country-opt' + (c.code === '+971' ? ' selected' : '');
-      opt.setAttribute('data-code', c.code);
-      opt.setAttribute('data-flag', c.flag);
-      opt.innerHTML = `
-        <span class="opt-flag">${c.flag}</span>
-        <span class="opt-name">${c.name}</span>
-        <span class="opt-code">${c.code}</span>
-      `;
-      opt.addEventListener('click', function (e) {
-        e.stopPropagation();
-        selectedFlag.textContent = c.flag;
-        selectedDial.textContent = c.code;
-        hiddenInput.value = c.code;
-        picker.classList.remove('open');
-        picker.setAttribute('aria-expanded', 'false');
-        menu.querySelectorAll('.country-opt').forEach(function (el) { el.classList.remove('selected'); });
-        opt.classList.add('selected');
-        const phoneInput = document.getElementById('enquiryPhone');
-        if (phoneInput) phoneInput.focus();
+    menu.innerHTML = `
+      <div class="country-dropdown-search-wrap">
+        <input type="text" class="country-dropdown-search" id="countrySearchInput" placeholder="Search country or code..." autocomplete="off">
+      </div>
+      <div class="country-dropdown-list" id="countryDropdownList"></div>
+    `;
+
+    const searchInput = document.getElementById('countrySearchInput');
+    const listContainer = document.getElementById('countryDropdownList');
+
+    function renderOptions(filterText) {
+      listContainer.innerHTML = '';
+      const filter = (filterText || '').toLowerCase().trim();
+      const filtered = COUNTRY_CODES.filter(function (c) {
+        return !filter || c.name.toLowerCase().includes(filter) || c.code.includes(filter) || c.iso.includes(filter);
       });
-      menu.appendChild(opt);
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = '<div style="padding:10px 14px;color:#8E8A82;font-size:12px;">No countries found</div>';
+        return;
+      }
+
+      filtered.forEach(function (c) {
+        const opt = document.createElement('div');
+        opt.className = 'country-opt' + (hiddenInput.value === c.code ? ' selected' : '');
+        opt.setAttribute('data-code', c.code);
+        opt.setAttribute('data-iso', c.iso);
+        opt.innerHTML = `
+          <span class="opt-flag">${getFlagHtml(c.iso, c.name)}</span>
+          <span class="opt-name">${c.name}</span>
+          <span class="opt-code">${c.code}</span>
+        `;
+        opt.addEventListener('click', function (e) {
+          e.stopPropagation();
+          setCountry(c.iso, c.code);
+          picker.classList.remove('open');
+          picker.setAttribute('aria-expanded', 'false');
+          const phoneInput = document.getElementById('enquiryPhone');
+          if (phoneInput) phoneInput.focus();
+        });
+        listContainer.appendChild(opt);
+      });
+    }
+
+    function setCountry(iso, code) {
+      if (selectedFlag) selectedFlag.innerHTML = getFlagHtml(iso);
+      if (selectedDial) selectedDial.textContent = code;
+      if (hiddenInput) hiddenInput.value = code;
+      renderOptions(searchInput ? searchInput.value : '');
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        renderOptions(this.value);
+      });
+      searchInput.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    }
+
+    // Auto-detect visitor's country on load
+    detectVisitorCountry(function (geo) {
+      const match = COUNTRY_CODES.find(function (c) {
+        return (geo.iso && c.iso === geo.iso.toLowerCase()) || c.code === geo.code;
+      });
+      if (match) {
+        setCountry(match.iso, match.code);
+      } else {
+        setCountry(geo.iso || 'ae', geo.code || '+971');
+      }
     });
+
+    renderOptions('');
 
     picker.addEventListener('click', function (e) {
       e.stopPropagation();
       const isOpen = picker.classList.contains('open');
       picker.classList.toggle('open', !isOpen);
       picker.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+      if (!isOpen && searchInput) {
+        setTimeout(function () { searchInput.focus(); }, 100);
+      }
     });
 
     // Close on outside click
@@ -562,8 +716,13 @@
       body: JSON.stringify(payload)
     })
     .then(function (res) {
-      return res.json().catch(function () {
-        return { success: true, redirect_url: 'thank-you.html' };
+      return res.text().then(function (text) {
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          console.error('Non-JSON response from server:', text);
+          throw new Error('Server returned an unexpected response. Please try again.');
+        }
       });
     })
     .then(function (data) {
@@ -594,9 +753,13 @@
       window.location.href = redirectTarget;
     })
     .catch(function (err) {
-      console.warn('Backend API connection offline/unavailable, falling back to local redirect:', err);
-      // Fallback: Proceed to thank-you.html so client experience is never interrupted
-      window.location.href = 'thank-you.html';
+      console.error('Enquiry submission failed:', err);
+      const globalErr = document.getElementById('enquiryGlobalError');
+      if (globalErr) {
+        globalErr.textContent = err.message || 'Connection error. Please try again or contact us directly.';
+        globalErr.style.display = 'block';
+      }
+      restoreSubmitBtn();
     });
 
     function restoreSubmitBtn() {
