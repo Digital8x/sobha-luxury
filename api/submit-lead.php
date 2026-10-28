@@ -46,8 +46,13 @@ if (!empty($honeypotField)) {
 // ----------------------------------------------------------------------------
 $renderTime = floatval($inputData['form_render_ts'] ?? 0);
 if ($renderTime > 0) {
+    // Convert seconds timestamp to milliseconds if needed (e.g. 10 digits = seconds)
+    if ($renderTime < 10000000000) {
+        $renderTime = $renderTime * 1000;
+    }
     $timeTakenSeconds = (microtime(true) * 1000 - $renderTime) / 1000;
-    if ($timeTakenSeconds < 1.8) {
+    // Only flag if timestamp is in the past and submitted in less than 1.5 seconds
+    if ($timeTakenSeconds > 0 && $timeTakenSeconds < 1.5) {
         recordBlockedLead($clientIp, "Submission too fast ({$timeTakenSeconds}s). Identified as automated script.", $inputData, $userAgent);
         echo json_encode([
             'success' => false,
@@ -86,7 +91,7 @@ $fullName = trim($inputData['full_name'] ?? $inputData['name'] ?? '');
 $countryCode = trim($inputData['country_code'] ?? $inputData['phone_country_code'] ?? '+971');
 $phone = trim($inputData['phone'] ?? $inputData['phone_number'] ?? '');
 $email = trim($inputData['email'] ?? '');
-$development = trim($inputData['development'] ?? 'SOBHA Luxury Portfolio');
+$development = trim($inputData['development'] ?? $inputData['project'] ?? 'SOBHA Luxury Portfolio');
 $residenceType = trim($inputData['residence_type'] ?? $inputData['residence'] ?? 'Selected Layout');
 $sourceButton = trim($inputData['source_button'] ?? 'Request Floor Plan');
 $pageUrl = trim($inputData['page_url'] ?? $_SERVER['HTTP_REFERER'] ?? '');

@@ -567,15 +567,16 @@
       });
     })
     .then(function (data) {
-      if (data && data.success === false && data.field) {
+      if (data && data.success === false) {
+        const errorMsg = data.error || data.message || 'Verification failed. Please review your details.';
         // Validation rejection from backend
-        if (data.field === 'name') setFieldError('enquiryFullName', data.message);
-        else if (data.field === 'email') setFieldError('enquiryEmail', data.message);
-        else if (data.field === 'phone') setFieldError('enquiryPhone', data.message);
+        if (data.field === 'name' || data.field === 'full_name') setFieldError('enquiryFullName', errorMsg);
+        else if (data.field === 'email') setFieldError('enquiryEmail', errorMsg);
+        else if (data.field === 'phone') setFieldError('enquiryPhone', errorMsg);
         else {
           const globalErr = document.getElementById('enquiryGlobalError');
           if (globalErr) {
-            globalErr.textContent = data.message || 'Verification failed. Please review your details.';
+            globalErr.textContent = errorMsg;
             globalErr.style.display = 'block';
           }
         }

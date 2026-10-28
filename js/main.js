@@ -408,11 +408,12 @@
         return res.json().catch(function () { return { success: true, redirect_url: 'thank-you.html' }; });
       })
       .then(function (data) {
-        if (data && data.success === false && data.field) {
-          if (data.field === 'name') setFieldError('name', data.message);
-          else if (data.field === 'email') setFieldError('email', data.message);
-          else if (data.field === 'phone') setFieldError('phone', data.message);
-          else showGlobalError(data.message || 'Verification failed. Please review your details.');
+        if (data && data.success === false) {
+          const errorMsg = data.error || data.message || 'Verification failed. Please review your details.';
+          if (data.field === 'name' || data.field === 'full_name') setFieldError('name', errorMsg);
+          else if (data.field === 'email') setFieldError('email', errorMsg);
+          else if (data.field === 'phone') setFieldError('phone', errorMsg);
+          else showGlobalError(errorMsg);
           resetSubmitButton();
           return;
         }
